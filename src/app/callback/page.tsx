@@ -31,8 +31,11 @@ export default function Callback() {
         if (res.ok) {
           if (result.refresh_token) {
             setRefreshToken(result.refresh_token);
+
+            localStorage.removeItem('client_id');
+            localStorage.removeItem('client_secret');
           } else {
-            setError('No refresh token found in response.');
+            setError('No refresh token found in response');
           }
         } else {
           setError(JSON.stringify(result, null, 2));
@@ -43,7 +46,12 @@ export default function Callback() {
   }, []);
 
   if (loading) {
-    return <p>loading</p>;
+    return (
+      <>
+        <div className="h-12 w-full animate-pulse rounded bg-neutral-900" />
+        <div className="h-4 w-full animate-pulse rounded bg-neutral-900" />
+      </>
+    );
   }
 
   if (error) {
@@ -51,19 +59,19 @@ export default function Callback() {
   }
 
   return (
-    <div>
+    <>
       <textarea
-        className="font-code w-full rounded border p-2"
+        className="w-full rounded p-2 outline-1 -outline-offset-1 outline-neutral-800 select-none"
         value={refreshToken}
         rows={5}
         readOnly
       />
       <button
         onClick={() => navigator.clipboard.writeText(refreshToken)}
-        className="rounded border px-4 py-2"
+        className="focus-visible:outline-accent text-accent flex w-full items-center justify-center rounded bg-neutral-900 py-3 font-semibold outline-1 -outline-offset-1 outline-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2"
       >
-        Copy Refresh Token
+        Copy
       </button>
-    </div>
+    </>
   );
 }

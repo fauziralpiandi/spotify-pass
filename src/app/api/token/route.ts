@@ -27,8 +27,7 @@ export async function POST(req: NextRequest) {
     const result = await res.json();
 
     return NextResponse.json(result);
-  } catch (error) {
-    console.error(error);
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch token' },
       { status: 500 },

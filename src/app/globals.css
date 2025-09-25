@@ -1,9 +1,7 @@
 @import 'tailwindcss';
 
 @theme inline {
-  --font-body: var(--font-body);
-  --font-display: var(--font-display);
-  --font-code: var(--font-code);
+  --color-accent: oklch(95% 0.04 95);
 }
 
 @layer base {

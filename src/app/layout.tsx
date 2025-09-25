@@ -1,23 +1,8 @@
 import type { Metadata } from 'next';
-import {
-  JetBrains_Mono,
-  Sofia_Sans,
-  Sofia_Sans_Semi_Condensed,
-} from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
-const fontBody = Sofia_Sans_Semi_Condensed({
-  variable: '--font-body',
-  subsets: ['latin'],
-});
-
-const fontDisplay = Sofia_Sans({
-  variable: '--font-display',
-  subsets: ['latin'],
-});
-
-const fontCode = JetBrains_Mono({
-  variable: '--font-code',
+const font = JetBrains_Mono({
   subsets: ['latin'],
 });
 
@@ -30,18 +15,36 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-US">
+    <html lang="en-US" suppressHydrationWarning>
       <body
-        className={`${fontBody.variable} ${fontDisplay.variable} ${fontCode.variable} font-body bg-neutral-950 text-neutral-50 antialiased`}
+        className={`${font.className} bg-neutral-950 text-neutral-50 antialiased`}
       >
         <div className="flex min-h-screen flex-col p-8">
-          {/* HEADER */}
+          <header
+            className="fixed top-0 right-0 left-0 z-30 flex items-center justify-between bg-neutral-950 px-8 pt-6 pb-3"
+            style={{
+              boxShadow: '0px 0px 30px 40px #0a0a0a',
+            }}
+          >
+            <div className="z-30 flex items-center space-x-2">
+              <h1 className="text-accent text-xl font-semibold">
+                Spotify Pass
+              </h1>
+            </div>
+          </header>
           <div className="mx-auto flex w-full max-w-2xl grow flex-col">
             <main className="my-24 grow text-pretty break-words md:my-36">
               {children}
             </main>
           </div>
-          {/* FOOTER */}
+          <footer className="relative">
+            <hr className="absolute top-0 left-1/2 h-px w-screen -translate-x-1/2 border-neutral-900" />
+            <aside className="mt-8 flex items-center justify-center">
+              <p className="text-sm text-neutral-400">
+                &copy; {new Date().getFullYear()} Fauzira Alpiandi
+              </p>
+            </aside>
+          </footer>
         </div>
       </body>
     </html>

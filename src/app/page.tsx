@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const scopes = [
+const SCOPES = [
   // Images
   'ugc-image-upload',
 
@@ -57,12 +57,16 @@ export default function App() {
     );
   };
   const handleSubmit = () => {
-    if (!clientId || !clientSecret || selectedScopes.length === 0) {
-      return alert('Please fill in all fields and select at least one scope.');
+    if (!clientId || !clientSecret) {
+      return alert('Please enter both Client ID and Client Secret');
     }
 
-    localStorage.setItem('spotify_client_id', clientId);
-    localStorage.setItem('spotify_client_secret', clientSecret);
+    if (selectedScopes.length === 0) {
+      return alert('Please select at least one scope');
+    }
+
+    localStorage.setItem('client_id', clientId);
+    localStorage.setItem('client_secret', clientSecret);
 
     const redirectUri = encodeURIComponent(
       `${process.env.NEXT_PUBLIC_BASE_URL}/callback`,
@@ -74,36 +78,51 @@ export default function App() {
   };
 
   return (
-    <div className="mx-auto max-w-xl">
-      <input
-        type="text"
-        placeholder="Client ID"
-        value={clientId}
-        onChange={e => setClientId(e.target.value)}
-        className="font-code w-full rounded border p-2"
-      />
-      <input
-        type="text"
-        placeholder="Client Secret"
-        value={clientSecret}
-        onChange={e => setClientSecret(e.target.value)}
-        className="font-code mt-2 w-full rounded border p-2"
-      />
-      <div className="my-4">
-        {scopes.map(scope => (
-          <label key={scope} className="font-code block">
-            <input
-              type="checkbox"
-              checked={selectedScopes.includes(scope)}
-              onChange={() => handleScopeChange(scope)}
-            />{' '}
-            {scope}
-          </label>
-        ))}
+    <>
+      <p className="mb-6 text-xs">
+        Please enter your Spotify API credentials and select the scopes you
+        need:
+      </p>
+      <div className="space-y-3">
+        <input
+          type="text"
+          placeholder="Client ID"
+          value={clientId}
+          onChange={e => setClientId(e.target.value)}
+          className="focus:outline-accent block w-full rounded bg-neutral-900 px-4 py-2 outline-1 -outline-offset-1 outline-neutral-800 placeholder:text-neutral-500 focus:outline-2 focus:-outline-offset-2"
+        />
+        <input
+          type="text"
+          placeholder="Client Secret"
+          value={clientSecret}
+          onChange={e => setClientSecret(e.target.value)}
+          className="focus:outline-accent block w-full rounded bg-neutral-900 px-4 py-2 outline-1 -outline-offset-1 outline-neutral-800 placeholder:text-neutral-500 focus:outline-2 focus:-outline-offset-2"
+        />
+        <div className="my-6 space-y-2 px-2">
+          {SCOPES.map(scope => (
+            <label
+              key={scope}
+              className="flex cursor-pointer items-center gap-2"
+            >
+              <input
+                type="checkbox"
+                checked={selectedScopes.includes(scope)}
+                onChange={() => handleScopeChange(scope)}
+                className="accent-neutral-600"
+              />
+              <span className="text-sm">{scope}</span>
+            </label>
+          ))}
+        </div>
+        <div>
+          <button
+            onClick={handleSubmit}
+            className="focus-visible:outline-accent text-accent flex w-full items-center justify-center rounded bg-neutral-900 py-3 font-semibold outline-1 -outline-offset-1 outline-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            Generate
+          </button>
+        </div>
       </div>
-      <button onClick={handleSubmit} className="rounded border px-4 py-2">
-        Generate Token
-      </button>
-    </div>
+    </>
   );
 }
