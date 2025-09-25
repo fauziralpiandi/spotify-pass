@@ -79,9 +79,12 @@ export default function App() {
 
   return (
     <>
-      <p className="mb-6 text-xs">
-        Please enter your Spotify API credentials and select the scopes you
-        need:
+      <p className="mb-6 text-sm text-neutral-200">
+        Make sure this url{' '}
+        <span className="text-accent select-text">
+          https://spotify-pass.vercel.app/callback
+        </span>{' '}
+        is set as redirect URI in your Spotify App.
       </p>
       <div className="space-y-3">
         <input
@@ -98,7 +101,7 @@ export default function App() {
           onChange={e => setClientSecret(e.target.value)}
           className="focus:outline-accent block w-full rounded bg-neutral-900 px-4 py-2 outline-1 -outline-offset-1 outline-neutral-800 placeholder:text-neutral-500 focus:outline-2 focus:-outline-offset-2"
         />
-        <div className="my-6 space-y-2 px-2">
+        <div className="my-6 flex grid grid-cols-1 space-y-2 px-2 md:grid-cols-2">
           {SCOPES.map(scope => (
             <label
               key={scope}

@@ -23,7 +23,7 @@ export default function RootLayout({
           <header
             className="fixed top-0 right-0 left-0 z-30 flex items-center justify-between bg-neutral-950 px-8 pt-6 pb-3"
             style={{
-              boxShadow: '0px 0px 30px 40px #0a0a0a',
+              boxShadow: '0px 0px 30px 30px #0a0a0a',
             }}
           >
             <div className="z-30 flex items-center space-x-2">
@@ -32,8 +32,8 @@ export default function RootLayout({
               </h1>
             </div>
           </header>
-          <div className="mx-auto flex w-full max-w-2xl grow flex-col">
-            <main className="my-24 grow text-pretty break-words md:my-36">
+          <div className="mx-auto flex w-full max-w-xl grow flex-col">
+            <main className="my-20 grow text-pretty break-words md:my-36">
               {children}
             </main>
           </div>

@@ -47,10 +47,10 @@ export default function Callback() {
 
   if (loading) {
     return (
-      <>
+      <div className="space-y-4">
         <div className="h-12 w-full animate-pulse rounded bg-neutral-900" />
         <div className="h-4 w-full animate-pulse rounded bg-neutral-900" />
-      </>
+      </div>
     );
   }
 
