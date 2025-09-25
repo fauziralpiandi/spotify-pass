@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-body: var(--font-body);
+  --font-display: var(--font-display);
+  --font-code: var(--font-code);
+}
+
+@layer base {
+  html {
+    user-select: none;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    text-rendering: geometricPrecision;
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}
