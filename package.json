@@ -1,45 +1,48 @@
 {
   "name": "spotify-pass",
+  "description": "Spotify Access Token Generator",
   "private": true,
   "license": "MIT",
-  "author": "Fauzira Alpiandi <fwzyrln@gmail.com>",
+  "author": "Fauzira Alpiandi <fauziralpiandi.dev@gmail.com>",
   "type": "module",
   "scripts": {
-    "build": "next build --no-lint",
-    "check": "tsc --noEmit",
-    "clean": "rm -rf .next/cache",
-    "dev": "next dev --turbopack",
+    "build": "tsc && vite build",
+    "dev:client": "vite",
+    "dev:server": "concurrently \"node api\" \"vite\"",
     "format": "prettier --write .",
-    "lint": "eslint --fix",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "15.5.4",
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "3.3.1",
-    "@tailwindcss/postcss": "4.1.13",
-    "@types/node": "24.5.2",
-    "@types/react": "19.1.13",
-    "@types/react-dom": "19.1.9",
-    "eslint": "9.36.0",
-    "eslint-config-next": "15.5.4",
-    "postcss": "8.5.6",
-    "prettier": "3.6.2",
-    "prettier-plugin-tailwindcss": "0.6.14",
-    "tailwindcss": "4.1.13",
-    "typescript": "5.9.2"
+    "lint": "eslint --fix src --ext ts,tsx",
+    "preview": "npm run build && vite preview",
+    "server": "node api"
   },
   "prettier": {
-    "arrowParens": "avoid",
     "bracketSpacing": true,
-    "semi": true,
     "singleQuote": true,
-    "trailingComma": "all",
     "plugins": [
       "prettier-plugin-tailwindcss"
     ]
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "4.1.17",
+    "@vitejs/plugin-react": "5.1.0",
+    "cors": "2.8.5",
+    "express": "5.1.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tailwindcss": "4.1.17",
+    "typescript": "5.9.3",
+    "vite": "7.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "concurrently": "9.2.1",
+    "eslint": "9.39.1",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.0.1",
+    "prettier": "3.6.2",
+    "prettier-plugin-tailwindcss": "0.7.1",
+    "typescript-eslint": "8.46.3"
   }
 }
