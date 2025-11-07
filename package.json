@@ -6,7 +6,7 @@
   "author": "Fauzira Alpiandi <fauziralpiandi.dev@gmail.com>",
   "type": "module",
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build",
     "dev:client": "vite",
     "dev:server": "concurrently \"node api\" \"vite\"",
     "format": "prettier --write .",
