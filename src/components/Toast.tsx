@@ -7,9 +7,9 @@ export function Toast({ message }: { message: string }) {
     <div
       role="alert"
       aria-live="assertive"
-      className="animate-fade-in fixed bottom-8 left-8 border-l-4 border-neutral-900 bg-neutral-50/80 px-8 py-4 backdrop-blur md:left-1/2 md:-translate-x-1/2"
+      className="animate-fade-in fixed bottom-0 left-1/2 w-full -translate-x-1/2 bg-neutral-900/50 p-8 text-center backdrop-blur"
     >
-      <p className="text-sm tracking-wide text-red-500">{message}</p>
+      <p className="text-sm tracking-wide text-neutral-100">{message}</p>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   TokenDisplay,
   TokenSummary,
 } from './components';
+// import { MOCK } from './constants';
 
 interface TokenData {
   access_token: string;
@@ -82,9 +83,14 @@ export function App() {
 
         setTokenData({ ...data, timestamp: Date.now() });
 
+        if (data.scope) {
+          setSelectedScopes(data.scope.split(' '));
+        }
+
         sessionStorage.removeItem('oauth_state');
         sessionStorage.removeItem('client_id');
         sessionStorage.removeItem('client_secret');
+        sessionStorage.removeItem('selected_scopes');
 
         setClientId(clientId);
         setClientSecret(clientSecret);
@@ -104,6 +110,11 @@ export function App() {
     const storedState = sessionStorage.getItem('oauth_state');
     const storedClientId = sessionStorage.getItem('client_id');
     const storedClientSecret = sessionStorage.getItem('client_secret');
+    const storedScopes = sessionStorage.getItem('selected_scopes');
+
+    if (storedScopes && selectedScopes.length === 0) {
+      setSelectedScopes(storedScopes.split(' '));
+    }
 
     if (
       code &&
@@ -114,17 +125,25 @@ export function App() {
     ) {
       void handleCallback(code, state, storedClientId, storedClientSecret);
       window.history.replaceState({}, document.title, '/');
+      sessionStorage.removeItem('selected_scopes');
     }
-  }, [handleCallback]);
+  }, [handleCallback, selectedScopes.length]);
 
   const authorizeWithSpotify = async () => {
     if (!clientId || !clientSecret) {
-      setError('Missing credentials');
+      setError('Please enter both Client ID and Client Secret');
+      return;
+    }
+
+    if (selectedScopes.length === 0) {
+      setError('Please select at least one scope');
       return;
     }
 
     setLoading(true);
     setError('');
+
+    const normalizedScopes = [...new Set(selectedScopes)].sort().join(' ');
 
     try {
       const response = await fetch('/api/authorize', {
@@ -132,7 +151,7 @@ export function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           clientId,
-          scopes: selectedScopes.join(' '),
+          scopes: normalizedScopes,
           redirectUri,
         }),
       });
@@ -146,6 +165,7 @@ export function App() {
       sessionStorage.setItem('oauth_state', data.state);
       sessionStorage.setItem('client_id', clientId);
       sessionStorage.setItem('client_secret', clientSecret);
+      sessionStorage.setItem('selected_scopes', normalizedScopes);
 
       window.location.href = data.authUrl;
     } catch (err) {
@@ -184,7 +204,8 @@ export function App() {
 
       setTokenData({
         ...data,
-        refresh_token: data.refresh_token,
+        refresh_token: data.refresh_token || tokenData.refresh_token,
+        scope: data.scope || tokenData.scope,
         timestamp: Date.now(),
       });
     } catch (err) {
@@ -216,8 +237,11 @@ export function App() {
 
   const resetFlow = () => {
     setTokenData(null);
+    setSelectedScopes([]);
     setCopiedToken(false);
     setCopiedRefresh(false);
+
+    sessionStorage.removeItem('selected_scopes');
   };
 
   if (tokenData && !tokenData.error) {

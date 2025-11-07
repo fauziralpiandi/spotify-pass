@@ -43,6 +43,16 @@ app.post('/api/authorize', (req, res) => {
     return res.status(400).json({ error: 'Missing client ID' });
   }
 
+  if (!redirectUri) {
+    return res.status(400).json({ error: 'Missing redirect URI' });
+  }
+
+  if (!scopes || !scopes.trim()) {
+    return res
+      .status(400)
+      .json({ error: 'At least one scope must be selected' });
+  }
+
   const state = crypto.randomBytes(16).toString('hex');
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = generateCodeChallenge(codeVerifier);
@@ -59,10 +69,7 @@ app.post('/api/authorize', (req, res) => {
   authUrl.searchParams.append('code_challenge_method', 'S256');
   authUrl.searchParams.append('code_challenge', codeChallenge);
   authUrl.searchParams.append('state', state);
-
-  if (scopes && scopes.trim()) {
-    authUrl.searchParams.append('scope', scopes);
-  }
+  authUrl.searchParams.append('scope', scopes.trim());
 
   res.json({ authUrl: authUrl.toString(), state });
 });

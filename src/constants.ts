@@ -1,5 +1,4 @@
 const IS_DEV = window.location.hostname === 'localhost';
-
 const MOCK = IS_DEV
   ? {
       access_token:

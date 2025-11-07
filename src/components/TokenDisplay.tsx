@@ -40,7 +40,7 @@ export function TokenDisplay({
           }`}
         >
           <p
-            className={`font-mono text-xs leading-relaxed break-all transition-colors duration-400 md:text-sm ${
+            className={`font-mono text-xs leading-relaxed break-all transition-colors duration-400 select-all md:text-sm ${
               isPrimary ? 'text-neutral-700' : 'text-neutral-600'
             }`}
           >

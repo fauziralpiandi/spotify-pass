@@ -42,10 +42,6 @@
     user-select: text;
   }
 
-  button {
-    user-select: none;
-  }
-
   @keyframes fadeIn {
     from {
       opacity: 0;
