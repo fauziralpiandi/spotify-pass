@@ -1,9 +1,5 @@
 # Spotify Pass
 
-A clean, minimal web application for generating Spotify access/refresh tokens using OAuth 2.0 with PKCE (Proof Key for Code Exchange).
+A minimal web application that generates Spotify access and refresh tokens using OAuth 2.0 with PKCE (Proof Key for Code Exchange). Provides a clean interface for input credentials, selecting Spotify API scopes, authorizing applications, and managing tokens with real-time expiration tracking.
 
-- ✨ **Secure OAuth Flow** - Implements OAuth 2.0 with PKCE for public clients  
-- 🎯 **Scope Selection** - Choose specific Spotify API permissions  
-- ⚡ **Token Management** - View, copy, and refresh access tokens  
-- ⏱️ **Countdown Timer** - Real-time token expiration tracking  
-- 🎨 **Clean Design** - Swiss Design-inspired minimal interface
+[MIT License](LICENSE)
